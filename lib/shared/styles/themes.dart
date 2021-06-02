@@ -29,6 +29,7 @@ final ThemeData lightTheme = ThemeData(
       color: Colors.black,
       fontSize: 20.0,
       fontWeight: FontWeight.w900,
+      fontFamily: 'Jannah',
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -69,6 +70,7 @@ final ThemeData darkTheme = ThemeData(
       color: Colors.white,
       fontSize: 20.0,
       fontWeight: FontWeight.w900,
+      fontFamily: 'Jannah',
     ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
