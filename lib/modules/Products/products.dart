@@ -40,7 +40,10 @@ class Products extends StatelessWidget {
                     fit: BoxFit.fill,
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace stackTrace) {
-                      return;
+                      return Container(
+                        width: 0,
+                        height: 0,
+                      );
                     },
                   ),
                 )
@@ -101,6 +104,12 @@ class Products extends StatelessWidget {
               text: '${state.changeFavoriteModel.message}',
             );
           }
+        }
+        if (state is ShopErrorFavoritesDataState) {
+          showToast(
+            state: ToastStates.ERROR,
+            text: 'error happened',
+          );
         }
       },
       builder: (BuildContext context, ShopStates state) {

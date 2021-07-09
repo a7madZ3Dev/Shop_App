@@ -232,8 +232,8 @@ class ShopCubit extends Cubit<ShopStates> {
       },
     ).catchError((error) {
       favorites[key] = oldValue;
-      emit(ShopErrorFavoritesDataState(error.toString()));
-      print(error.data.message);
+      emit(ShopErrorFavoritesDataState());
+      print(error.message);
     });
   }
 

@@ -108,7 +108,7 @@ Widget myDivider() => Padding(
 
 // text button
 Widget defaultTextButton({
-  @required Function onPressed,
+  @required VoidCallback onPressed,
   @required String label,
 }) =>
     TextButton(
@@ -232,6 +232,10 @@ Widget buildGridProduct(Product productModel, BuildContext context) =>
                 image: NetworkImage(productModel.image),
                 width: double.infinity,
                 height: 120.0,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace stackTrace) {
+                  return Container();
+                },
               ),
               if (productModel.discount != 0)
                 Container(

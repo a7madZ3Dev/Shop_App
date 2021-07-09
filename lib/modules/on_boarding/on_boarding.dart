@@ -44,7 +44,9 @@ class OnBoarding extends StatelessWidget {
         actions: [
           defaultTextButton(
             label: 'SKIP',
-            onPressed: submit,
+            onPressed: (){
+              submit(context);
+            },
           ),
         ],
       ),

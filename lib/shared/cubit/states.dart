@@ -106,9 +106,7 @@ class ShopSuccessChangeFavoritesDataState extends ShopStates {
 }
 
 class ShopErrorFavoritesDataState extends ShopStates {
-  final String error;
-
-  ShopErrorFavoritesDataState(this.error);
+ 
 }
 
 // Favorites
