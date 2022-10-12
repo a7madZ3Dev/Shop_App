@@ -16,7 +16,7 @@ class ShopChangeBottomNavBarState extends ShopStates {}
 class ShopLogInLoadingState extends ShopStates {}
 
 class ShopLogInSuccessState extends ShopStates {
-  final ShopModel shopModel;
+  final UserModel shopModel;
 
   ShopLogInSuccessState(this.shopModel);
 }
@@ -31,7 +31,7 @@ class ShopLogInErrorState extends ShopStates {
 class ShopRegisterLoadingState extends ShopStates {}
 
 class ShopRegisterSuccessState extends ShopStates {
-  final ShopModel shopModel;
+  final UserModel shopModel;
 
   ShopRegisterSuccessState(this.shopModel);
 }
@@ -43,26 +43,25 @@ class ShopRegisterErrorState extends ShopStates {
 }
 
 // Get Profile
-class ShopLoadindGetProfileState extends ShopStates{}
+class ShopLoadingGetProfileState extends ShopStates {}
 
 class ShopSuccessGetProfileState extends ShopStates {
-  final ShopModel shopModel;
+  final UserModel? shopModel;
   ShopSuccessGetProfileState({
-     this.shopModel,
+    this.shopModel,
   });
 }
 
-class ShopErrorGetProfileState extends ShopStates{
+class ShopErrorGetProfileState extends ShopStates {
   final String error;
-   ShopErrorGetProfileState(this.error);
-
+  ShopErrorGetProfileState(this.error);
 }
 
 // Update Profile
-class ShopLoadingUpdateProfileState extends ShopStates{}
+class ShopLoadingUpdateProfileState extends ShopStates {}
 
 class ShopSuccessUpdateProfileState extends ShopStates {
-  final ShopModel shopModel;
+  final UserModel shopModel;
 
   ShopSuccessUpdateProfileState(this.shopModel);
 }
@@ -87,6 +86,8 @@ class ShopErrorHomeDataState extends ShopStates {
 }
 
 // Categories
+class ShopLoadingCategoriesDataState extends ShopStates {}
+
 class ShopSuccessCategoriesDataState extends ShopStates {}
 
 class ShopErrorCategoriesDataState extends ShopStates {
@@ -96,18 +97,16 @@ class ShopErrorCategoriesDataState extends ShopStates {
 }
 
 // Change Favorites
-class ShopChangeFavoritesDataState extends ShopStates {}
+class ShopLoadingChangeFavoritesDataState extends ShopStates {}
 
 class ShopSuccessChangeFavoritesDataState extends ShopStates {
-  final ChangeFavoriteModel changeFavoriteModel;
+  final ChangeFavoriteModel? changeFavoriteModel;
   ShopSuccessChangeFavoritesDataState({
     this.changeFavoriteModel,
   });
 }
 
-class ShopErrorFavoritesDataState extends ShopStates {
- 
-}
+class ShopErrorFavoritesDataState extends ShopStates {}
 
 // Favorites
 class ShopLoadingGetFavoritesDataState extends ShopStates {}
@@ -130,25 +129,6 @@ class ShopGetSearchErrorState extends ShopStates {
 
   ShopGetSearchErrorState(this.error);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // for theme mode
 abstract class AppStates {}

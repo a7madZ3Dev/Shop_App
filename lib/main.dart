@@ -17,15 +17,14 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   bool onBoarding = await CacheHelper.getData(key: kOnBoarding);
-  token = await CacheHelper.getData(key: kToken);
-
+  String token = await CacheHelper.getData(key: kToken);
   DioHelper.init();
   runApp(MyApp(token: token, onBoarding: onBoarding));
 }
 
 class MyApp extends StatelessWidget {
-  final String token;
-  final bool onBoarding;
+  final String? token;
+  final bool? onBoarding;
   MyApp({this.onBoarding, this.token});
   // This widget is the root of your application.
 
@@ -54,8 +53,8 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: appCubit.isDark ? ThemeMode.dark : ThemeMode.light,
-            home: onBoarding
-                ? (token != null && token.isNotEmpty ? Home() : LogIn())
+            home: onBoarding!
+                ? (token != null && token!.isNotEmpty ? Home() : LogIn())
                 : OnBoarding(),
           );
         },

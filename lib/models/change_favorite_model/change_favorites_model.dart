@@ -1,16 +1,16 @@
 class ChangeFavoriteModel {
   final bool status;
-  final String message;
+  final String? message;
 
   ChangeFavoriteModel({
-    this.status,
+    required this.status,
     this.message,
   });
 
   factory ChangeFavoriteModel.fromJson(Map<String, dynamic> jsonData) {
     return ChangeFavoriteModel(
       status: jsonData['status'],
-      message: jsonData['message'],
+      message: jsonData['message'] != null ? jsonData['message'] : null,
     );
   }
 }

@@ -1,20 +1,19 @@
-import 'package:flutter/foundation.dart';
-
-class ShopModel {
+class UserModel {
   final bool status;
-  final String message;
-  final UserDate data;  // بالاساس المفروض ان يكون ديناميك
-  ShopModel({
-     this.status,
-     this.message,
-     this.data,
+  final String? message;
+  final UserDate? data;
+  UserModel({
+    required this.status,
+    this.message,
+    required this.data,
   });
 
-  factory ShopModel.fromJson(Map<String, dynamic> jsonData) {
-    return ShopModel(
+  factory UserModel.fromJson(Map<String, dynamic> jsonData) {
+    return UserModel(
       status: jsonData['status'],
-      message: jsonData['message'],
-      data: jsonData['data'] != null ? UserDate.fromJson(jsonData['data']) : null,
+      message: jsonData['message'] != null ? jsonData['message'] : null,
+      data:
+          jsonData['data'] != null ? UserDate.fromJson(jsonData['data']) : null,
     );
   }
 }
@@ -24,19 +23,19 @@ class UserDate {
   final String name;
   final String email;
   final String phone;
-  final String image;
-  final int points;
-  final int credit;
+  final String? image;
+  final int? points;
+  final int? credit;
   final String token;
   UserDate({
-    @required this.id,
-    @required this.name,
-    @required this.email,
-    @required this.phone,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
     this.image,
     this.points,
     this.credit,
-    @required this.token,
+    required this.token,
   });
 
   factory UserDate.fromJson(Map<String, dynamic> jsonData) {

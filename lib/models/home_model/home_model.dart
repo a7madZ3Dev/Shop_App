@@ -1,21 +1,19 @@
-import 'package:flutter/widgets.dart';
-
 import '../category_model/category_model.dart';
 
 class HomeModel {
   final bool status;
-  final String message;
-  final HomeDataModel data; // بالاساس المفروض ان يكون ديناميك
+  final String? message;
+  final HomeDataModel? data; 
   HomeModel({
-    this.status,
+    required this.status,
     this.message,
-    this.data,
+    required this.data,
   });
 
   factory HomeModel.fromJson(Map<String, dynamic> jsonData) {
     return HomeModel(
       status: jsonData['status'],
-      message: jsonData['message'],
+      message: jsonData['message'] != null ? jsonData['message'] : null,
       data: jsonData['data'] != null
           ? HomeDataModel.fromJson(jsonData['data'])
           : null,
@@ -28,8 +26,8 @@ class HomeDataModel {
   final List<Product> products;
 
   HomeDataModel({
-    @required this.banners,
-    @required this.products,
+    required this.banners,
+    required this.products,
   });
 
   factory HomeDataModel.fromJson(Map<String, dynamic> jsonData) {
@@ -51,13 +49,13 @@ class HomeDataModel {
 class Banner {
   final int id;
   final String image;
-  final Product product;
-  final Category category;
+  final Product? product;
+  final Category? category;
   Banner({
-    this.id,
-    this.image,
-    this.product,
-    this.category,
+   required this.id,
+   required this.image,
+   this.product,
+   this.category,
   });
 
   factory Banner.fromJson(Map<String, dynamic> jsonData) {
@@ -77,22 +75,22 @@ class Banner {
 class Product {
   final int id;
   final num price;
-  final num oldPrice;
-  final num discount;
-  final String description;
+  final num? oldPrice;
+  final num? discount;
+  final String? description;
   final String image;
   final String name;
-  final List<dynamic> images;
-  final bool inFavorites;
-  final bool inCart;
+  final List<dynamic>? images;
+  final bool? inFavorites;
+  final bool? inCart;
   Product({
-    this.id,
-    this.price,
+    required this.id,
+    required this.price,
     this.oldPrice,
     this.discount,
     this.description,
-    this.image,
-    this.name,
+    required this.image,
+    required this.name,
     this.images,
     this.inFavorites,
     this.inCart,
@@ -107,7 +105,7 @@ class Product {
       image: jsonData['image'],
       name: jsonData['name'],
       description: jsonData['description'],
-      images: jsonData['images'],
+      images: jsonData['images'] != null ? jsonData['images'] : [],
       inFavorites: jsonData['in_favorites'],
       inCart: jsonData['in_cart'],
     );

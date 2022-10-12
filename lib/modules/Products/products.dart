@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../../shared/cubit/cubit.dart';
 import '../../shared/cubit/states.dart';
@@ -32,16 +32,16 @@ class Products extends StatelessWidget {
               autoPlayCurve: Curves.easeIn,
               scrollDirection: Axis.horizontal,
             ),
-            items: homeModel.data.banners
+            items: homeModel.data!.banners
                 .map(
                   (element) => Image.network(
                     '${element.image}',
                     width: double.infinity,
                     fit: BoxFit.fill,
                     errorBuilder: (BuildContext context, Object exception,
-                        StackTrace stackTrace) {
+                        StackTrace? stackTrace) {
                       return Container(
-                        width: 0,
+                        width: double.infinity,
                         height: 0,
                       );
                     },
@@ -86,9 +86,9 @@ class Products extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             children: List.generate(
-                homeModel.data.products.length,
+                homeModel.data!.products.length,
                 (index) =>
-                    buildGridProduct(homeModel.data.products[index], context)),
+                    buildGridProduct(homeModel.data!.products[index], context)),
           ),
         ]),
       );
@@ -97,18 +97,10 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (BuildContext context, ShopStates state) {
-        if (state is ShopSuccessChangeFavoritesDataState) {
-          if (!state.changeFavoriteModel.status) {
-            showToast(
-              state: ToastStates.ERROR,
-              text: '${state.changeFavoriteModel.message}',
-            );
-          }
-        }
         if (state is ShopErrorFavoritesDataState) {
           showToast(
             state: ToastStates.ERROR,
-            text: 'error happened',
+            text: 'can\'t favorite it',
           );
         }
       },
@@ -118,7 +110,7 @@ class Products extends StatelessWidget {
           condition:
               shopCubit.homeModel != null && shopCubit.categoryModel != null,
           builder: (context) => productsBuilder(
-              shopCubit.homeModel, shopCubit.categoryModel, context),
+              shopCubit.homeModel!, shopCubit.categoryModel!, context),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },

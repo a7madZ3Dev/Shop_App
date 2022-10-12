@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../../shared/cubit/cubit.dart';
 import '../../models/home_model/home_model.dart';
@@ -14,8 +14,8 @@ Widget defaultButton({
   Color background = Colors.blue,
   bool isUpperCase = true,
   double radius = 5.0,
-  @required Function function,
-  @required String text,
+  required void Function()? function,
+  required String text,
 }) =>
     Container(
       width: width,
@@ -40,24 +40,24 @@ Widget defaultButton({
 
 // form field
 Widget defaultFormField({
-  TextEditingController controller,
-  String initialValue,
-  @required TextInputType type,
-  Function onSubmit,
-  Function onChange,
-  Function onTap,
-  Function onSaved,
+  TextEditingController? controller,
+  String? initialValue,
+  required TextInputType type,
+  void Function(String value)? onSubmit,
+  void Function(String value)? onChange,
+  VoidCallback? onTap,
+  void Function(String?)? onSaved,
   bool isPassword = false,
-  @required Function validate,
-  @required String label,
-  @required IconData prefix,
-  IconData suffix,
-  Function suffixPressed,
+  String? Function(String? value)? validate,
+  required String label,
+  required IconData prefix,
+  IconData? suffix,
+  VoidCallback? suffixPressed,
   bool isClickable = true,
   bool readOnly = false,
   bool showCursor = true,
-  FocusNode focusNodeField,
-  Color fillColor,
+  FocusNode? focusNodeField,
+  Color? fillColor,
   TextInputAction textInputAction = TextInputAction.next,
 }) =>
     TextFormField(
@@ -97,7 +97,7 @@ Widget defaultFormField({
 // simple divider
 Widget myDivider() => Padding(
       padding: const EdgeInsetsDirectional.only(
-        start: 20.0,
+        start: 0.0,
       ),
       child: Container(
         width: double.infinity,
@@ -108,8 +108,8 @@ Widget myDivider() => Padding(
 
 // text button
 Widget defaultTextButton({
-  @required VoidCallback onPressed,
-  @required String label,
+  required VoidCallback onPressed,
+  required String label,
 }) =>
     TextButton(
       onPressed: onPressed,
@@ -123,8 +123,8 @@ Widget defaultTextButton({
 
 // toast message to show
 void showToast({
-  @required String text,
-  @required ToastStates state,
+  required String text,
+  required ToastStates state,
 }) =>
     Fluttertoast.showToast(
       msg: text,
@@ -166,7 +166,7 @@ void navigateTo(BuildContext context, Widget widget) => Navigator.push(
       ),
     );
 
-// push to another screen and remove all the previous screens
+// push to the stack new screen and remove all the previous screens
 void navigateAndFinish(BuildContext context, Widget widget) =>
     Navigator.pushAndRemoveUntil(
       context,
@@ -176,7 +176,7 @@ void navigateAndFinish(BuildContext context, Widget widget) =>
       (Route<dynamic> route) => false,
     );
 
-// push to another screen and remove all the previous
+// Replace the current route with new
 void navigateAndReplacement(BuildContext context, Widget widget) =>
     Navigator.pushReplacement(
       context,
@@ -185,7 +185,7 @@ void navigateAndReplacement(BuildContext context, Widget widget) =>
       ),
     );
 
-// for onBorading page
+// for onBoarding page
 Widget buildBoardingItem(BoardingModel item) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -218,7 +218,7 @@ Widget buildBoardingItem(BoardingModel item) => Column(
       ],
     );
 
-// singel product
+// single product
 Widget buildGridProduct(Product productModel, BuildContext context) =>
     Container(
       color: Colors.white,
@@ -233,8 +233,10 @@ Widget buildGridProduct(Product productModel, BuildContext context) =>
                 width: double.infinity,
                 height: 120.0,
                 errorBuilder: (BuildContext context, Object exception,
-                    StackTrace stackTrace) {
-                  return Container();
+                    StackTrace? stackTrace) {
+                  return Container(
+                    height: 120.0,
+                  );
                 },
               ),
               if (productModel.discount != 0)
@@ -285,7 +287,7 @@ Widget buildGridProduct(Product productModel, BuildContext context) =>
                         ),
                         if (productModel.discount != 0)
                           Text(
-                            '${productModel.oldPrice.round()}',
+                            '${productModel.oldPrice!.round()}',
                             style: TextStyle(
                               fontSize: 12.0,
                               color: Colors.grey,
@@ -301,7 +303,7 @@ Widget buildGridProduct(Product productModel, BuildContext context) =>
                           icon: CircleAvatar(
                             radius: 25.0,
                             backgroundColor: ShopCubit.get(context)
-                                    .favorites[productModel.id]
+                                    .checkState(productModel.id)
                                 ? Theme.of(context).primaryColor
                                 : Colors.grey,
                             child: Icon(
@@ -327,11 +329,17 @@ Widget buildCategoryItem(Category model) => Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
         Image(
-          image: NetworkImage(model.image),
-          height: 100.0,
-          width: 100.0,
-          fit: BoxFit.cover,
-        ),
+            image: NetworkImage(model.image),
+            height: 100.0,
+            width: 100.0,
+            fit: BoxFit.cover,
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              return Container(
+                width: 100.0,
+                height: 100.0,
+              );
+            }),
         Container(
           color: Colors.black.withOpacity(
             .8,
@@ -369,7 +377,7 @@ Widget titleSection(String title, BuildContext context) => Container(
       ),
     );
 
-// singel category
+// single category
 Widget buildCatItem(Category model) => Padding(
       padding: const EdgeInsets.all(10.0),
       child: Row(
@@ -399,7 +407,7 @@ Widget buildCatItem(Category model) => Padding(
       ),
     );
 
-// singel favorite item
+// single favorite item
 Widget favoriteItem(BuildContext context, FavoriteData favoriteData) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
       child: Container(
@@ -499,23 +507,18 @@ Widget favoriteItem(BuildContext context, FavoriteData favoriteData) => Padding(
       ),
     );
 
-// singel search item
+// single search item
 Widget searchItem(BuildContext context, Product product) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
       child: Container(
         height: 130.0,
         child: Row(
           children: [
-            Stack(
-              alignment: AlignmentDirectional.bottomStart,
-              children: [
-                Image(
-                  image: NetworkImage('${product.image}'),
-                  width: 120.0,
-                  height: 130.0,
-                  fit: BoxFit.cover,
-                ),
-              ],
+            Image(
+              image: NetworkImage('${product.image}'),
+              width: 120.0,
+              height: 130.0,
+              fit: BoxFit.cover,
             ),
             SizedBox(width: 10.0),
             Expanded(

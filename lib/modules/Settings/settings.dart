@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../../shared/cubit/cubit.dart';
 import '../../shared/cubit/states.dart';
@@ -16,15 +16,14 @@ class Settings extends StatelessWidget {
         if (state is ShopSuccessUpdateProfileState) {
           if (state.shopModel.status) {
             showToast(
-                text: state.shopModel.message, state: ToastStates.SUCCESS);
+                text: state.shopModel.message!, state: ToastStates.SUCCESS);
           }
         }
       },
       builder: (BuildContext context, ShopStates state) {
         ShopCubit shopCubit = ShopCubit.get(context);
-
         return ConditionalBuilder(
-          condition: shopCubit.shopModel != null,
+          condition: shopCubit.userModel != null,
           builder: (context) => Padding(
             padding: const EdgeInsets.all(10.0),
             child: Form(
@@ -35,21 +34,21 @@ class Settings extends StatelessWidget {
                     if (state is ShopLoadingUpdateProfileState)
                       LinearProgressIndicator(),
                     SizedBox(
-                      height: 30.0,
+                      height: 20.0,
                     ),
                     defaultFormField(
-                      initialValue: shopCubit.shopModel.data.name,
+                      initialValue: shopCubit.userModel!.data!.name,
                       type: TextInputType.name,
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'name must not be empty';
                         }
-
                         return null;
                       },
-                      onSaved: (String value) {
-                        shopCubit.userUpdateData['name'] = value;
+                      onSaved: (String? value) {
+                        shopCubit.userUpdateData['name'] = value!;
                       },
+                      textInputAction: TextInputAction.next,
                       label: 'Name',
                       prefix: Icons.person,
                     ),
@@ -57,18 +56,18 @@ class Settings extends StatelessWidget {
                       height: 15.0,
                     ),
                     defaultFormField(
-                      initialValue: shopCubit.shopModel.data.email,
+                      initialValue: shopCubit.userModel!.data!.email,
                       type: TextInputType.emailAddress,
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'email must not be empty';
                         }
-
                         return null;
                       },
-                      onSaved: (String value) {
-                        shopCubit.userUpdateData['email'] = value;
+                      onSaved: (String? value) {
+                        shopCubit.userUpdateData['email'] = value!;
                       },
+                      textInputAction: TextInputAction.next,
                       label: 'Email Address',
                       prefix: Icons.email,
                     ),
@@ -76,24 +75,23 @@ class Settings extends StatelessWidget {
                       height: 15.0,
                     ),
                     defaultFormField(
-                        initialValue: shopCubit.shopModel.data.phone,
+                        initialValue: shopCubit.userModel!.data!.phone,
                         type: TextInputType.phone,
-                        validate: (String value) {
-                          if (value.isEmpty) {
+                        validate: (String? value) {
+                          if (value!.trim().isEmpty) {
                             return 'phone must not be empty';
                           }
-
                           return null;
                         },
-                        onSaved: (String value) {
-                          shopCubit.userUpdateData['phone'] = value;
+                        onSaved: (String? value) {
+                          shopCubit.userUpdateData['phone'] = value!;
                         },
-                        textInputAction: null,
+                        textInputAction: TextInputAction.done,
                         label: 'Phone',
                         prefix: Icons.phone,
                         onSubmit: (value) {
-                          if (formKey.currentState.validate()) {
-                            formKey.currentState.save();
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
                             shopCubit.updateUserData();
                           }
                         }),
@@ -102,8 +100,8 @@ class Settings extends StatelessWidget {
                     ),
                     defaultButton(
                       function: () {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           shopCubit.updateUserData();
                         }
                       },
@@ -115,7 +113,7 @@ class Settings extends StatelessWidget {
                     ),
                     defaultButton(
                       function: () {
-                        shopCubit.signOut(context);
+                        shopCubit.userSignOut(context);
                       },
                       text: 'Log out',
                       background: Theme.of(context).primaryColor,

@@ -2,10 +2,10 @@ import '../../models/home_model/home_model.dart';
 
 class SearchModel {
   final bool status;
-  final dynamic message;
-  final SearchDataModel data;
+  final String? message;
+  final SearchDataModel? data;
   SearchModel({
-    this.status,
+    required this.status,
     this.message,
     this.data,
   });
@@ -13,7 +13,7 @@ class SearchModel {
   factory SearchModel.fromJson(Map<String, dynamic> jsonData) {
     return SearchModel(
       status: jsonData['status'],
-      message: jsonData['message'],
+      message: jsonData['message'] != null ? jsonData['message'] : null,
       data: jsonData['data'] != null
           ? SearchDataModel.fromJson(
               jsonData['data'],
@@ -24,11 +24,11 @@ class SearchModel {
 }
 
 class SearchDataModel {
-  final int currentPage;
+  final int? currentPage;
   final List<Product> data;
   SearchDataModel({
     this.currentPage,
-    this.data,
+    required this.data,
   });
 
   factory SearchDataModel.fromJson(Map<String, dynamic> jsonData) {

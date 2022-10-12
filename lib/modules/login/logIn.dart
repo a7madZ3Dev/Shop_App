@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../Register/Register.dart';
 import '../../shared/cubit/cubit.dart';
@@ -19,24 +19,24 @@ class LogIn extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(listener: (context, state) {
       if (state is ShopLogInSuccessState) {
         if (state.shopModel.status) {
-          CacheHelper.saveData(key: kToken, token: state.shopModel.data.token)
+          CacheHelper.saveData(key: kToken, token: state.shopModel.data!.token)
               .then((value) {
             navigateAndReplacement(
               context,
               Home(),
             );
             showToast(
-              text: 'Welcome ${state.shopModel.data.name}',
+              text: 'Welcome ${state.shopModel.data!.name}',
               state: ToastStates.SUCCESS,
             );
-            token = shopCubit.shopModel.data.token;
             shopCubit.getHomeData();
+            shopCubit.getCategoriesData();
             shopCubit.getFavoritesData();
             shopCubit.getUserData();
           });
         } else {
           showToast(
-            text: state.shopModel.message,
+            text: state.shopModel.message!,
             state: ToastStates.ERROR,
           );
         }
@@ -59,29 +59,29 @@ class LogIn extends StatelessWidget {
                       'LOG IN',
                       style: Theme.of(context)
                           .textTheme
-                          .headline4
+                          .headline4!
                           .copyWith(color: Colors.black),
                     ),
                     Text(
                       'Login now to browse our hot offers',
                       style: Theme.of(context)
                           .textTheme
-                          .headline6
+                          .headline6!
                           .copyWith(color: Colors.grey),
                     ),
                     SizedBox(height: 30.0),
                     defaultFormField(
                       type: TextInputType.emailAddress,
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'Email field must not be empty';
                         }
                         return null;
                       },
                       label: 'Email Address',
                       prefix: Icons.email_outlined,
-                      onSaved: (String value) {
-                        shopCubit.userLogInData['email'] = value;
+                      onSaved: (String? value) {
+                        shopCubit.userLogInData['email'] = value!;
                       },
                     ),
                     SizedBox(height: 15.0),
@@ -94,21 +94,21 @@ class LogIn extends StatelessWidget {
                         suffixPressed: () {
                           shopCubit.changeState();
                         },
-                        textInputAction: null,
-                        validate: (String value) {
-                          if (value.isEmpty) {
+                        textInputAction: TextInputAction.done,
+                        validate: (String? value) {
+                          if (value!.trim().isEmpty) {
                             return 'Password field must not be empty';
                           }
                           return null;
                         },
                         label: 'Password',
                         prefix: Icons.lock_open_outlined,
-                        onSaved: (String value) {
-                          shopCubit.userLogInData['password'] = value;
+                        onSaved: (String? value) {
+                          shopCubit.userLogInData['password'] = value!;
                         },
                         onSubmit: (value) {
-                          if (formKey.currentState.validate()) {
-                            formKey.currentState.save();
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
                             shopCubit.userLogin();
                           }
                         }),
@@ -117,8 +117,8 @@ class LogIn extends StatelessWidget {
                       condition: state is! ShopLogInLoadingState,
                       builder: (BuildContext context) => defaultButton(
                         function: () {
-                          if (formKey.currentState.validate()) {
-                            formKey.currentState.save();
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
                             shopCubit.userLogin();
                           }
                         },

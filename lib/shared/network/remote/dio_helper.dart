@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
 class DioHelper {
-  static Dio dio;
+  static late Dio dio;
   static init() {
     dio = Dio(
       BaseOptions(
@@ -13,10 +12,10 @@ class DioHelper {
   }
 
   static Future<dynamic> getDataFromApi({
-    @required String url,
-    Map<String, dynamic> query,
+    required String url,
+    Map<String, dynamic>? query,
     String lang = 'en',
-    String token,
+    String? token,
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
@@ -28,11 +27,11 @@ class DioHelper {
   }
 
   static Future<dynamic> postDataToApi({
-    @required String url,
-    Map<String, dynamic> query,
-    @required dynamic data,
+    required String url,
+    Map<String, dynamic>? query,
+    required dynamic data,
     String lang = 'en',
-    String token,
+    String? token,
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
@@ -47,11 +46,11 @@ class DioHelper {
   }
 
   static Future<dynamic> putDataToApi({
-    @required String url,
-    Map<String, dynamic> query,
-    @required dynamic data,
+    required String url,
+    Map<String, dynamic>? query,
+    required dynamic data,
     String lang = 'en',
-    String token,
+    String? token,
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',

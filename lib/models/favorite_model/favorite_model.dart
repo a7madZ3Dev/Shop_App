@@ -2,18 +2,18 @@ import '../../models/home_model/home_model.dart';
 
 class FavoriteModel {
   final bool status;
-  final dynamic message;
-  final FavoritesDataModel data;
+  final String? message;
+  final FavoritesDataModel? data;
   FavoriteModel({
-    this.status,
+    required this.status,
     this.message,
-    this.data,
+    required this.data,
   });
 
   factory FavoriteModel.fromJson(Map<String, dynamic> jsonData) {
     return FavoriteModel(
       status: jsonData['status'],
-      message: jsonData['message'],
+      message: jsonData['message'] != null ? jsonData['message'] : null,
       data: jsonData['data'] != null
           ? FavoritesDataModel.fromJson(
               jsonData['data'],
@@ -24,11 +24,11 @@ class FavoriteModel {
 }
 
 class FavoritesDataModel {
-  final int currentPage;
+  final int? currentPage;
   final List<FavoriteData> data;
   FavoritesDataModel({
     this.currentPage,
-    this.data,
+    required this.data,
   });
 
   factory FavoritesDataModel.fromJson(Map<String, dynamic> jsonData) {
@@ -44,16 +44,16 @@ class FavoritesDataModel {
 }
 
 class FavoriteData {
-  final int id;
+  final int? id;
   final Product data;
   FavoriteData({
     this.id,
-    this.data,
+    required this.data,
   });
   factory FavoriteData.fromJson(Map<String, dynamic> jsonData) {
     return FavoriteData(
       id: jsonData['id'],
-      data: Product.fromJson(jsonData['product']),
+      data: Product.fromJson(jsonData['product']) ,
     );
   }
 }

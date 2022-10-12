@@ -15,24 +15,24 @@ class Search extends StatelessWidget {
         builder: (BuildContext context, ShopStates state) {
           ShopCubit shopCubit = ShopCubit.get(context);
           List<Product> list = shopCubit.searchModel != null
-              ? shopCubit.searchModel.data.data
+              ? shopCubit.searchModel!.data!.data
               : [];
           return WillPopScope(
-            onWillPop: () {
-              Navigator.of(context).pop();
+            onWillPop: () async {
               shopCubit.clearList();
               searchController.clear();
+              return true;
             },
             child: Scaffold(
               appBar: AppBar(
-                automaticallyImplyLeading: false,
-                leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      shopCubit.clearList();
-                      searchController.clear();
-                    }),
+                // automaticallyImplyLeading: false,
+                // leading: IconButton(
+                //     icon: Icon(Icons.arrow_back),
+                //     onPressed: () {
+                //       Navigator.of(context).pop();
+                //       shopCubit.clearList();
+                //       searchController.clear();
+                //     }),
                 title: Text(
                   'Search',
                 ),
@@ -43,14 +43,18 @@ class Search extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: defaultFormField(
-                      textInputAction: null,
+                      textInputAction: TextInputAction.search,
                       controller: searchController,
                       type: TextInputType.text,
                       onChange: (String value) {
-                        shopCubit.getSearch(value);
+                        if (value.isEmpty)
+                          BlocProvider.of<ShopCubit>(context).clearList();
                       },
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      onSubmit: (String value) {
+                        if (value.isNotEmpty) shopCubit.getSearch(value);
+                      },
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'search must not be empty';
                         }
                         return null;
@@ -63,12 +67,15 @@ class Search extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 5.0,
+                    height: 2.0,
                   ),
                   if (state is ShopGetSearchLoadingState)
-                    LinearProgressIndicator(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: LinearProgressIndicator(),
+                    ),
                   SizedBox(
-                    height: 5.0,
+                    height: 2.0,
                   ),
                   Expanded(
                     child: searchBuilder(

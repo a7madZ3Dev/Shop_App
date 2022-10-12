@@ -4,17 +4,18 @@ import '../../components/constants.dart';
 
 class CacheHelper {
   // save data in cache
-  static Future<void> saveData({String key, bool value, String token}) async {
+  static Future<void> saveData(
+      {required String key,  bool? value,  String? token}) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     if (key == kToken) {
-      await sharedPreferences.setString(kToken, token);
+      await sharedPreferences.setString(kToken, token!);
     } else {
-      await sharedPreferences.setBool(key, value);
+      await sharedPreferences.setBool(key, value!);
     }
   }
 
   // get data from cache
-  static Future<dynamic> getData({String key}) async {
+  static Future<dynamic> getData({required String key}) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     var value;
     if (key == kToken) {
@@ -37,6 +38,6 @@ class CacheHelper {
   // delete data in cache
   static Future<bool> deleteData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.remove(kToken);
+    return preferences.remove(kToken);
   }
 }

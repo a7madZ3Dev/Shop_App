@@ -16,7 +16,6 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backwardsCompatibility: false,
     elevation: 0.0,
     centerTitle: true,
     backgroundColor: Colors.white,
@@ -44,8 +43,8 @@ final ThemeData lightTheme = ThemeData(
 
 // DARK THEME
 final ThemeData darkTheme = ThemeData(
-  primarySwatch: Colors.blue,
   scaffoldBackgroundColor: Colors.black,
+  primarySwatch: Colors.blue,
   primaryColorDark: Colors.blue,
   fontFamily: 'Jannah',
   textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.blue),
@@ -57,7 +56,6 @@ final ThemeData darkTheme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backwardsCompatibility: false,
     elevation: 0.0,
     centerTitle: true,
     color: Colors.black,
@@ -75,9 +73,9 @@ final ThemeData darkTheme = ThemeData(
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.black,
       showUnselectedLabels: true,
       unselectedItemColor: Colors.white,
+      backgroundColor: Colors.black,
       selectedItemColor: Colors.blue,
       elevation: 20.0),
 );

@@ -9,7 +9,7 @@ import '../../models/onBoarding_model/onboarding_model.dart';
 
 class OnBoarding extends StatelessWidget {
   final pageController = PageController();
-  bool isLast = false;
+  var isLast = false;
   final List<BoardingModel> boarding = [
     BoardingModel(
       title: 'On Board 1 Title',
