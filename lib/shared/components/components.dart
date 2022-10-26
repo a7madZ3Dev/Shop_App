@@ -422,6 +422,13 @@ Widget favoriteItem(BuildContext context, FavoriteData favoriteData) => Padding(
                   width: 120.0,
                   height: 130.0,
                   fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: 0,
+                      );
+                    },
                 ),
                 if (favoriteData.data.discount != 0)
                   Container(
