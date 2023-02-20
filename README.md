@@ -1,6 +1,6 @@
-# shop_app 🛒
+# Salla_app 🛒
 
-Salla is a simple e-Commerce application for training in dealing with Api and  Bloc (Cubit) as State Management.
+Salla is a simple e-Commerce application for training in dealing with Api and Bloc (Cubit) as State Management.
 It is still under development.
 
 <div align="center">
