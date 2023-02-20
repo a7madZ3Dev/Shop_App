@@ -16,7 +16,7 @@ It is still under development.
 
 ## 📱 Screen Shots 
 <img alt="jpg" src="preview/view_1.jpg" width= "300" /> <img alt="jpg" src="preview/view_2.jpg" width= "300" />
-<img alt="jpg" src="preview/view_3.jpg" width= "300" /> <img alt="jpg" src="preview/view_3.jpg" width= "300" />
+<img alt="jpg" src="preview/view_3.jpg" width= "300" /> <img alt="jpg" src="preview/view_4.jpg" width= "300" />
 
 ## 🎥 Promo Video
 
